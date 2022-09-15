@@ -15,7 +15,6 @@ public class YahooFinanceScraper {
     private static final String URL = "https://finance.yahoo.com/quote/COKE/history?period1=99100800&period2=1663113600&interval=1mo&filter=history&frequency=1mo&includeAdjustedClose=true";
 
     public ScrapedResult scrap(Company company) {
-        
         try {
             Connection connection = Jsoup.connect(URL);
             Document document = connection.get();
