@@ -15,7 +15,8 @@ public class Application {
 
     public static void main(String[] args) {
 //        SpringApplication.run(Application.class, args);
-
+//      String format 기능 설명
+        
         String s = "hello my name is %s";
 
         String[] names = {"green", "red", "blue"};
