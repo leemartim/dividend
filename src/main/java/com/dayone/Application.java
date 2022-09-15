@@ -38,7 +38,7 @@ public class Application {
 
                 System.out.println(year + "/" + month + "/" + day + " -> " + dividend);
             }
-
+            
         }catch (IOException e) {
             e.printStackTrace();
         }
