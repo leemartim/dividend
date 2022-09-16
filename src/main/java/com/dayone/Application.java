@@ -13,17 +13,11 @@ import org.springframework.boot.SpringApplication;
 
 import java.io.IOException;
 
-//@SpringBootApplication
+@SpringBootApplication
 public class Application {
 
     public static void main(String[] args) {
-//        SpringApplication.run(Application.class, args);
-
-        Scraper scraper = new YahooFinanceScraper();
-//        var result = scraper.scrap(Company.builder().ticker("O").build());
-        var result = scraper.scrapCompanyByTicker("COKE");
-        System.out.println(result);
-
+       SpringApplication.run(Application.class, args);
 
     }
 }
