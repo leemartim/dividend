@@ -17,5 +17,7 @@ public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
     Optional<CompanyEntity> findByName(String name); // 회사명을 인자로 받음
     //optional 사용하는 이유는 null값에 대한 처리와 값이 없는 경우에 대한 처리가 편안
 
+    Optional<CompanyEntity> findByTicker(String ticker);
+
     Page<CompanyEntity> findByNameStartingWithIgnoreCase(String s, Pageable pageable); // Like 연산자 사용 준비 완료
 }
