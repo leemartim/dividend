@@ -1,7 +1,9 @@
 package com.dayone.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /*
@@ -11,7 +13,8 @@ CompanyEntity를 재사용해도되지만 가독성에 문제가 있을수있으
  */
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Company {
 
     private String ticker;

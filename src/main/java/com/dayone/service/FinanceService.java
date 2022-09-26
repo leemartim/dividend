@@ -3,11 +3,14 @@ package com.dayone.service;
 import com.dayone.model.Company;
 import com.dayone.model.Dividend;
 import com.dayone.model.ScrapedResult;
+import com.dayone.model.constants.CasheKey;
 import com.dayone.persist.CompanyRepository;
 import com.dayone.persist.DividendRepository;
 import com.dayone.persist.entity.CompanyEntity;
 import com.dayone.persist.entity.DividendEntity;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class FinanceService {
@@ -22,7 +26,9 @@ public class FinanceService {
     private final CompanyRepository companyRepository;
     private final DividendRepository dividendRepository;
 
+    @Cacheable(key = "#companyName", value = CasheKey.KEY_FINANCE)
     public ScrapedResult getDividendByCompanyName(String companyName) {
+        log.info("search company -> " + companyName);
         // 1. 회사명을 기준으로 회사 정보를 조회
         CompanyEntity company = this.companyRepository.findByName(companyName)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회사명입니다.")); // 값이 없으면 예외를 배출
@@ -39,16 +45,10 @@ public class FinanceService {
 //        }
 
         List<Dividend> dividends = dividendEntityLies.stream()
-                .map(e -> Dividend.builder()
-                        .date(e.getDate())
-                        .dividend(e.getDividend())
-                        .build())
+                .map(e -> new Dividend(e.getDate(), e.getDividend()))
                 .collect(Collectors.toList());
 
-        return new ScrapedResult(Company.builder()
-                .ticker(company.getTicker())
-                .name(company.getName())
-                .build(),
+        return new ScrapedResult(new Company(company.getTicker(), company.getName()),
                 dividends);
     }
 }
